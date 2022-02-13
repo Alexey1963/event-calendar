@@ -1,0 +1,20 @@
+.adverts-list {
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+}
+.adverts-list .ul{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: magenta;
+    list-style-type: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.adverts-list .ul li {
+    width: 256px;
+}

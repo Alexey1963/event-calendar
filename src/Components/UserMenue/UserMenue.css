@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+.user-menue-page {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    font-family: Roboto;
+    font-weight: normal;
+}
+.user-menue-page .button {
+    /* height: 60px; */
+    list-style: none;
+    background-color: #642b87;
+    margin: 0 20px;
+    display: flex;
+    align-items: center;
+    border: 2px solid darkblue; 
+    border-radius: 5px;   
+}
+.user-menue-page .link {
+    color: white;
+    margin: 0 20px 0 20px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    line-height: 20px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.user-menue-page .select-list {
+    width: 100%;
+    height: 40px;
+    padding: 5px 20px;
+    font-size: 20px;
+    line-height: 24px;
+    background-color: orange;
+    border: 2px solid orangered;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    /* background: url('/src/Images/app-1646219_640.png') no-repeat right center /cover; */
+}

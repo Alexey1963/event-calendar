@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+.reg {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.reg .form .main {
+    margin-top: 30px;
+}
+.reg .form {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: white;
+    width: 400px;
+    line-height: 20px;
+    font-family: Roboto;
+    font-weight: normal;
+    font-size: 20px;
+}
+.reg .form .main .label {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px;
+}
+.reg .form .main .label p {
+    padding: 0 10px;
+}
+.reg .form .main .label .input {
+   width: 200px;
+   font-size: 22x;
+}
+.reg .footer {
+    display: flex;
+    justify-content: center;
+}
+.reg .footer button {
+    margin: 20px;
+    padding: 15px 30px;
+    background-color: darkgray;
+    border: none;
+    border-radius: 30px;
+    font-family: Roboto;
+    font-weight: normal;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+}

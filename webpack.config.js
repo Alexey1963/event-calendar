@@ -1,4 +1,5 @@
 var HtmlWebpackPlugin = require ("html-webpack-plugin");
+const path = require('path');
 var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
     template: __dirname + "/public/index.html",
     filename: "index.html",

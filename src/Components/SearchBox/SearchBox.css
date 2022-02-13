@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+.search-box {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    line-height: 20px;
+    font-family: Roboto;
+    font-weight: normal;
+    font-size: 20px;
+}
+.search-box .show-all {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    list-style: none;
+    background-color: #642b87;
+    color: white;
+    padding: 10px 30px;
+    border: 2px solid darkblue; 
+    border-radius: 34px;
+    margin: 0 20px;
+    cursor: pointer;   
+}
+.search-box .search {
+    width: 60%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+}
+.search-box .forward {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: url('/src/Images/right arrow.png') no-repeat center center /cover rgba(255, 165, 0, 1);
+    margin: 0 10px;
+    border: 2px solid orangered;
+    cursor: pointer;
+}
+.search-box .actual-period {
+    width: 300px;
+    background-color: #642b87;
+    color: white;
+    padding: 15px 30px;
+    border: 2px solid darkblue; 
+    border-radius: 34px;
+    text-align: center;   
+}
+.search-box .back {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: url('/src/Images/left arrow.png') no-repeat center center /cover rgba(255, 165, 0, 1);
+    margin: 0 10px;
+    border: 2px solid orangered;
+    cursor: pointer;
+}

@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+.header-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.header-page p {
+    font-family: Roboto;
+    font-size: 40px;
+    line-height: 45px;
+    font-weight: 700;
+    font-style: bold;
+}
+.header-page .image{
+    width: 100%;
+    margin: 10px 10px;
+    height: 400px;
+    /* min-height: 400px; */
+    display: flex;
+}
+.header-page img {
+    width: 100%;
+}
