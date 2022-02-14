@@ -12,12 +12,36 @@ const months = ['Январь', 'Февраль', 'Март', 'Апрель', '�
 
 class Adverts extends React.Component {
     state = {
-
+        joker: false
     }
 
     subscribeUser = (id) => {
-        console.log(id)
-        this.props.addUserToAdvertItem(id);
+        const {token} = this.props
+        const {joker} = this.state
+        // console.log(id)
+        const subscribeReq = {
+            advertId: id,
+            token: token
+        }
+        if (!token) {
+            this.setState({joker: true})
+            setTimeout(() => this.setState({joker: false}), 2000);
+        } else {
+            fetch('http://localhost:3002/subscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(subscribeReq)
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                this.props.addUserToAdvertItem(data);
+            })
+            .catch(err => console.error(err))
+        }
     }
 
     componentDidMount() {
@@ -25,7 +49,7 @@ class Adverts extends React.Component {
         fetch('http://localhost:3002/')
         .then(res => res.json())
         .then(data => {
-            console.log(data)
+            // console.log(data)
             this.props.addAdvertsList(data)
         })
         .catch(err => console.error(err))
@@ -37,7 +61,8 @@ class Adverts extends React.Component {
 
     render() {
         const {advertsArr, types, categories} = this.props;
-        console.log(advertsArr)
+        const {joker} = this.state
+        // console.log(advertsArr)
         return (
             <div className='adverts-list'>
                 <ul className='ul'>
@@ -46,6 +71,7 @@ class Adverts extends React.Component {
                         <AdvertItem {...item}
                                     type={types[item.type]}
                                     category={categories[item.category]}
+                                    joker={joker}
                                     callBack={this.subscribeUser} />
                     </li>
                     ))}
@@ -58,6 +84,7 @@ class Adverts extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
+        token: state.token,
         advertsArr: state.adverts,
         types: state.types,
         categories: state.categories
@@ -67,7 +94,7 @@ const mapStateToProps = (state) => {
 function mapDispatchToProps(dispatch) {
     return {
         addAdvertsList: (list) => dispatch(addAdvertsListToStore(list)),
-        addUserToAdvertItem: (id) => dispatch(addUserToAdvertItemInStore(id))
+        addUserToAdvertItem: (obj) => dispatch(addUserToAdvertItemInStore(obj))
     }
 }
 

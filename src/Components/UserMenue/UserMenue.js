@@ -14,7 +14,7 @@ class UserMenue extends React.Component {
     state = {joker: false};
 
     setJoker = (id) => {
-        let {joker} = this.state
+        // let {joker} = this.state
         let res
         id ? res = false : res = true
         this.setState({joker: res})
@@ -35,7 +35,7 @@ class UserMenue extends React.Component {
         return (
             <div className='user-menue-page'>
                 <div className='button'>
-                    <div className='link' onClick={() => this.setJoker(0)}>Войти</div>
+                    <div className='link' onClick={() => this.setJoker(0)}>Зарегистрироваться</div>
                     {joker && <Registration  callBack={this.setJoker} />}
                 </div>
                 <div className='select-category'>

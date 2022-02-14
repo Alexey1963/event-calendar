@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import './SearchBox.css';
 const dayjs = require('dayjs');
 import URL from '../../../config.json';
+import Subscribes from './Subscribes/Subscribes';
 import { writeCurrentDateToStore } from '../../redux/actions';
 import { connect } from 'react-redux';
 
@@ -16,7 +17,8 @@ class SearchBox extends React.Component {
             month: '',
             year: ''
         },
-    count: 0
+    count: 0,
+    joker: false
     }
 
     getAdvertsList = (month, year) => {
@@ -32,6 +34,16 @@ class SearchBox extends React.Component {
         newDate.year ++;
         this.setState({searchDate: newDate, count: 0}, () => console.log(this.state))
     }
+
+    setJoker = (id) => {
+        let res
+        id ? res = false : res = true;
+        this.setState({joker: res})
+    }
+
+    // removeSubscribesItem = (id) => {
+
+    // }
 
     inc = () => {
         const {searchDate, count} = this.state;
@@ -70,6 +82,7 @@ class SearchBox extends React.Component {
     }
 
     componentDidMount() {
+        // Get Current Data & Save to Store
         const {date, month, year} = this.state;
         const currentDate = {
             date: +dayjs().get('date'),
@@ -85,7 +98,7 @@ class SearchBox extends React.Component {
     }
 
     render() {
-        const {searchDate} = this.state;
+        const {searchDate, joker} = this.state;
         let currentMonth;
         console.log(searchDate)
         if(searchDate) {
@@ -99,12 +112,15 @@ class SearchBox extends React.Component {
 
         return (
             <div className='search-box'>
-                {/* <div className='show-all' onClick={() => this.showAll()}>Показать все</div> */}
+                <div className='show-all' onClick={() => this.showAll()}>Показать все</div>
                 <div className='search'>
                     <div className='forward' onClick={() => this.inc()}></div>
                     <div className='actual-period'>{`${searchDate? currentMonth : ''} ${searchDate.year}`}</div>
                     <div className='back' onClick={() => this.dec()}></div>
                 </div>
+                <div className='subscribes' onClick={() => this.setJoker(0)}>Показать записи</div>
+                {joker && <Subscribes 
+                    callBack={this.setJoker} />}
             </div>
         )
     }

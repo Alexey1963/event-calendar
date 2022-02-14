@@ -47,17 +47,15 @@ let adverts = [
         category: 0,
         date: '2022-02-23',
         descr: 'bla-bla-bla',
-        participants: [
-            {
-                id: ''
-            }
-        ]
+        participants: []
     }
 ]
 let types = ['ФанЛаб1', 'ФанЛаб2', 'ФанЛаб3', 'ФанЛаб4']
 
 let categories = ['Дошкольники 3+', 'Школьники 6-15', 'Взрослые 16+']
 
+let userId = 0;
+let advertId = 0;
 
 let credits = [
     {
@@ -85,8 +83,8 @@ app.post('/registration', (req, res) => {
             const num = 10 + Math.floor(Math.random() * 10);
             const salt = bcrypt.genSaltSync(num);
             const hash = bcrypt.hashSync(name + phone, salt);
-            console.log(salt, hash)
-            user = {name, age, phone, email, salt, hash};
+            // console.log(salt, hash)
+            user = {id: ++userId, adverts: [], name, age, phone, email, salt, hash};
             users.push(user)
         }
         const newToken = getRandomString();
@@ -98,40 +96,73 @@ app.post('/registration', (req, res) => {
     }
 });
 
-// app.post('/token', (req, res) => {
-//     const {login, password} = req.body;
-//     const user = users.find((u) => u.login === login);
+app.post('/subscribe', (req, res) => {
+    const {advertId, token} = req.body;
+    const authorized = tokens.find((t) => t.token === token);
+    // console.log(authorized, advertId)
+    if(authorized && advertId) {
 
-//     if(user) {
-//         const hash = bcrypt.hashSync(password, user.salt);
+        const userIndex = users.findIndex(u => u.hash === authorized.hash);
+        let user = users[userIndex];
+        let advertsList = user.adverts;
+        advertsList = advertsList.filter(x => x !== advertId)
+        advertsList.push(advertId);
+        user.adverts = advertsList
+        // console.log(users)
 
-//         if(hash === user.hash) {
-//             const newToken = getRandomString();
-//             tokens = tokens.filter(t => t.login !== login);
-//             tokens.push({ login: login, token: newToken });
-//             // console.log(newToken)
-//             res.json({ login: login, token: newToken });        
-//         } else {
-//             res.status(401).send()
-//         }
-//     } else {
-//         res.status(401).send()
-//     }
-// })
+        const advertIndex = adverts.findIndex(a => a.id === advertId);
+        let advert = adverts[advertIndex];
+        let participantsList = advert.participants;
+        participantsList = participantsList.filter(x => x !== user.id)
+        participantsList.push(user.id)
+        advert.participants = participantsList
+        // console.log(adverts)
 
-// app.post('/logout', (req, res) => {
-//     const {token} = req.body;
-//     if (token) {
-//         tokens = tokens.filter(t => t.token !== token)
-//         res.send('logout')
-//     } else {
-//         res.send('login')
-//     }
-// })
+        res.json({ userId: user.id, advertId: advertId });        
+
+    } else {
+        res.status(401).send()
+    }
+})
+
+app.post('/subscribesuserlist', (req, res) => {
+    const {token} = req.body;
+    const authorized = tokens.find((t) => t.token === token);
+    // console.log(authorized)
+    if(authorized) {
+        const index = users.findIndex(u => u.hash === authorized.hash);
+        let user = users[index];
+        let list = user.adverts;
+        const advertsList = adverts.filter(a => list.includes(a.id))
+        console.log(advertsList)
+        res.json(advertsList);        
+    } else {
+        res.status(401).send()
+    }
+})
 
 app.get('/', (req, res) => {
     res.status(200).json(adverts)
 });
+
+app.delete('/subscribe-remove/:id', (req, res) => {
+    const removeId = parseInt(req.params.id);
+    // console.log(index)
+    const {token} = req.body;
+    const authorized = tokens.find((t) => t.token === token);
+
+    if(authorized) {
+
+        const index = users.findIndex(u => u.hash === authorized.hash);
+        let user = users[index];
+        let list = user.adverts;
+        list = list.filter(x => x !== removeId)
+        res.status(200).json(list)
+
+    } else {
+        res.status(500).send()
+    }
+})
 
 app.post('/credits', (req, res) => {
     const {clientName, amount, creditTerm} = req.body;
@@ -150,17 +181,6 @@ app.post('/credits', (req, res) => {
     }
 });
 
-app.delete('/credits/:id', (req, res) => {
-    const index = parseInt(req.params.id);
-    // console.log(req.params.id, index)
-    const item = credits.find(c => c.id === index);
-    if (item) {
-        credits = credits.filter(c => c.id !== index)
-        res.status(200).json(credits)
-    } else {
-        res.status(500).send(`credit entry id = ${index} not found`)
-    }
-})
 
 app.listen(3002, () => {
     console.log('events server is loaded')

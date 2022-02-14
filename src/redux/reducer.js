@@ -8,6 +8,7 @@ const initialState = {
         password: '',
         hash: '',
     },
+    myId: 0,
     token: '',
     currentDate: {
         date: '',
@@ -20,60 +21,36 @@ const initialState = {
         year: '',
         category: ''
     },
-    users: [
-        {
-            id: 0,
-            login: 'Пупкин',
-            age: 16,
-            phone: '7(985)3091582',
-            email: 'ash@tenflex.com',
-            adverts: [
-                {
-                    id: ''
-                }
-            ]
-        }
-    ],
-    adverts: [
-        // {
-        //     id: 1,
-        //     type: 0,
-        //     category: 0,
-        //     date: '2022-02-23',
-        //     descr: 'bla-bla-bla',
-        //     participants: [
-        //         {
-        //             id: ''
-        //         }
-        //     ]
-        // }
-    ],
+    adverts: [],
         types: ['ФанЛаб1', 'ФанЛаб2', 'ФанЛаб3', 'ФанЛаб4'],
-    categories: ['Дошкольники 3+', 'Школьники 6-16', 'Взрослые 16+']
+    categories: ['Дошкольники 3+', 'Школьники 6-16', 'Взрослые 16+'],
+    userAdvertsStack: []
 }
 
 function reducer(state=initialState, action) {
 
-    const { user, users, adverts, advertsRequest } = state;
+    const { user, myId, adverts, advertsRequest } = state;
     
     switch(action.type) {
 
         case WRITE_CURRENT_DATE_TO_STORE:
             const { date } = action.payload;
             state = {...state, currentDate: date}
-            console.log(state)
+            // console.log(state)
             return state;
         
         case ADD_USER_TO_ADVERTITEM_IN_STORE:
-            const { index } = action.payload;
-            const newUsers = [...users];
-            const newAdverts = [...adverts];
-            const userIndex = newUsers.findIndex((x) => x.login === user.login);
-            const advertsIndex = newAdverts.findIndex((x) => x.id === index);
-            if (userIndex !== -1 && advertsIndex !== -1) {
-                newUsers[userIndex].adverts.push({id:index});
-                newAdverts[advertsIndex].participants.push({id: newUsers[userIndex].id});
-                state = {...state, users: newUsers, adverts: newAdverts}
+            const { obj } = action.payload;
+            let newAdverts = [...adverts];
+            const advertId = obj.advertId;
+            const myId = obj.userId;
+            const index = newAdverts.findIndex((x) => x.id === advertId);
+            if (index !== -1) {
+                let advert = newAdverts[index];
+                let participants = advert.participants;
+                participants = participants.filter(p => p !== myId);
+                participants.push(myId);
+                state = {...state, myId: myId, adverts: newAdverts}
                 console.log(state)
                 return state;
             }
@@ -95,7 +72,7 @@ function reducer(state=initialState, action) {
             case ADD_ADVERTS_LIST_TO_STORE:
                 const { list } = action.payload;
                 state = {...state, adverts: list}
-                console.log(state)
+                // console.log(state)
                 return state;    
         
         default:

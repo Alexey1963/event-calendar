@@ -12,11 +12,11 @@ function writeCurrentDateToStore (obj) {
         }  
     }
 }
-function addUserToAdvertItemInStore (id) {
+function addUserToAdvertItemInStore (obj) {
   return {
       type: ADD_USER_TO_ADVERTITEM_IN_STORE,
       payload: {
-        index: id
+        obj: obj
       }  
   }
 }
