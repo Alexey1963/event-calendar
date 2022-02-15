@@ -15,6 +15,7 @@ const imageBlock = {
     // background: `url(${picture}) no-repeat center center /contain rgba(128, 128, 128, 1)`
 }
 
+
 class AdvertItem extends React.Component {
     state = {
 
@@ -24,9 +25,8 @@ class AdvertItem extends React.Component {
         this.props.callBack(id)
     }
 
-
     render() {
-        const {id, type, category, date, descr, joker} = this.props
+        const {id, type, category, date, descr, joker, activeID} = this.props
         return (
             <div className='advert-item'>
                 <div className='question'>Когда?</div>
@@ -36,7 +36,7 @@ class AdvertItem extends React.Component {
                 <div className='image-block' style={imageBlock}>
                     {/* <img className='image' src={image} /> */}
                     <div className='image'></div>
-                    {joker && <div className='claim'>Необходимо зарегистрироваться</div>}
+                    {joker && (id === activeID) && <div className='claim'>Необходимо зарегистрироваться</div>}
                 </div>
                 <div className='question'>Для кого?</div>
                 <div className='data'>{`${category}`}</div>

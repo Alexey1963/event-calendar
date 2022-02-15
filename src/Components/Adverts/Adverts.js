@@ -12,12 +12,14 @@ const months = ['Январь', 'Февраль', 'Март', 'Апрель', '�
 
 class Adverts extends React.Component {
     state = {
-        joker: false
+        joker: false,
+        activeID: 0
     }
 
     subscribeUser = (id) => {
         const {token} = this.props
         const {joker} = this.state
+        this.setState({activeID: id})
         // console.log(id)
         const subscribeReq = {
             advertId: id,
@@ -56,12 +58,20 @@ class Adverts extends React.Component {
     }
 
     componentDidUpdate() {
+        
+        // fetch('http://localhost:3002/')
+        // .then(res => res.json())
+        // .then(data => {
+        //     // console.log(data)
+        //     this.props.addAdvertsList(data)
+        // })
+        // .catch(err => console.error(err))
 
     }
 
     render() {
         const {advertsArr, types, categories} = this.props;
-        const {joker} = this.state
+        const {joker, activeID} = this.state
         // console.log(advertsArr)
         return (
             <div className='adverts-list'>
@@ -72,6 +82,7 @@ class Adverts extends React.Component {
                                     type={types[item.type]}
                                     category={categories[item.category]}
                                     joker={joker}
+                                    activeID={activeID}
                                     callBack={this.subscribeUser} />
                     </li>
                     ))}

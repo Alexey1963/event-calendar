@@ -15,6 +15,7 @@ class Subscribes extends React.Component {
         const request = {
             token: token
         }
+        console.log(advertId)
         if(token) {
             fetch(`http://localhost:3002/subscribe-remove/${advertId}`, {
                 method: 'DELETE',
@@ -27,7 +28,8 @@ class Subscribes extends React.Component {
             .then(res => res.json())
             .then(data => {
                 console.log(data)
-                this.setState({advertsList: data})
+                // this.setState({advertsList: data}, console.log(this.state.advertsList))
+                this.getUserSubscribes()
             })
             .catch(err => console.error(err))
         }

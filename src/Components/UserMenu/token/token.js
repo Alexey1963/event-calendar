@@ -1,10 +1,12 @@
 import React from 'react';
 import './token.css';
+import { useNavigate } from 'react-router-dom';
 import { addUserTokenToStore } from '../../../redux/actions'
 import { connect } from 'react-redux';
-
+const password = '123';
 
 class Registration extends React.Component {
+
     state = {
         name: '',
         age: '',
@@ -35,6 +37,8 @@ class Registration extends React.Component {
     submit = (e) => {
         e.preventDefault()
 
+        const {history} = this.props
+
         const fd = new FormData(e.target);
         const user = {
             name: fd.get("name"),
@@ -57,6 +61,10 @@ class Registration extends React.Component {
             console.log(data)
             this.props.addUserToken(data.newToken)
             this.props.callBack(1)
+            if(data.user.name === 'admin') {
+                // console.log(history)
+                history('/admin')
+            }
         })
         .catch(err => console.error(err))
     }
@@ -103,5 +111,9 @@ function mapDispatchToProps(dispatch) {
         addUserToken: (obj) => dispatch(addUserTokenToStore(obj))
     }
 }
- 
-export default connect(mapStateToProps, mapDispatchToProps)(Registration);
+function RegistrationPage(props) {
+    const history = useNavigate()
+    return <Registration {...props} history={history} />
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegistrationPage);

@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+.admin-menue-page {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    font-family: Roboto;
+    font-weight: normal;
+}
+.admin-menue-page .button {
+    color: white;
+    background-color: #642b87;
+    margin: 0 20px 0 20px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    line-height: 20px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: 2px solid darkblue; 
+    border-radius: 5px;   
+}

@@ -28,53 +28,35 @@ let tokens = [];
 let users = [
     {
         id: 0,
-        login: 'Пупкин',
-        age: 16,
-        phone: '+7 123 456-78-90',
-        email: 'ash@tenflex.com',
-        adverts: [
-            {
-                id: ''
-            }
-        ]
+        name: 'admin',
+        age: '',
+        phone: '+ 7 123 456-78-90',
+        email: 'eshum@gmail.com',
+        hash: '$2b$15$lK4mczSLBw3/9h3RQ3ZN2uOYjObu4tXtdoSOy3m8F1iXan6Tu1Doy'
     }
 ]
 
 let adverts = [
-    {
-        id: 1,
-        type: 0,
-        category: 0,
-        date: '2022-02-23',
-        descr: 'bla-bla-bla',
-        participants: []
-    }
+    // {
+    //     id: 1,
+    //     type: 0,
+    //     category: 0,
+    //     date: '2022-02-23',
+    //     descr: 'bla-bla-bla',
+    //     participants: []
+    // }
 ]
-let types = ['ФанЛаб1', 'ФанЛаб2', 'ФанЛаб3', 'ФанЛаб4']
 
-let categories = ['Дошкольники 3+', 'Школьники 6-15', 'Взрослые 16+']
-
-let userId = 0;
-let advertId = 0;
-
-let credits = [
-    {
-        id: 0,
-        client_name: 'Alexey',
-        amount: 1000,
-        credit_term: '2022-12-31'
-    }
-];
-let creditID = 0;
+let userID = 0;
+let advertID = 0;
 
 app.post('/registration', (req, res) => {
     const {name, age, phone, email} = req.body;
 
-    if(name && phone && email) {
+    if( name && phone && email) {
         let user = users.find((u) => u.name === name && u.phone === phone && u.email === email);
         
         if (user) {
-            // console.log(user);
             if(!user.age) { user.age = age }
             const index = users.findIndex(u => u.hash === user.hash);
             users.splice(index, 1, user)
@@ -84,13 +66,13 @@ app.post('/registration', (req, res) => {
             const salt = bcrypt.genSaltSync(num);
             const hash = bcrypt.hashSync(name + phone, salt);
             // console.log(salt, hash)
-            user = {id: ++userId, adverts: [], name, age, phone, email, salt, hash};
+            user = {id: ++userID, adverts: [], name, age, phone, email, salt, hash};
             users.push(user)
         }
         const newToken = getRandomString();
         tokens = tokens.filter(t => t.hash !== user.hash);
         tokens.push({ hash: user.hash, token: newToken });
-        res.json({users, newToken});              
+        res.json({user, newToken});              
     } else {
         res.status(401).send()
     }
@@ -100,7 +82,7 @@ app.post('/subscribe', (req, res) => {
     const {advertId, token} = req.body;
     const authorized = tokens.find((t) => t.token === token);
     // console.log(authorized, advertId)
-    if(authorized && advertId) {
+    if(authorized && (advertId !== undefined)) {
 
         const userIndex = users.findIndex(u => u.hash === authorized.hash);
         let user = users[userIndex];
@@ -157,6 +139,7 @@ app.delete('/subscribe-remove/:id', (req, res) => {
         let user = users[index];
         let list = user.adverts;
         list = list.filter(x => x !== removeId)
+        user.adverts = list
         res.status(200).json(list)
 
     } else {
@@ -164,23 +147,28 @@ app.delete('/subscribe-remove/:id', (req, res) => {
     }
 })
 
-app.post('/credits', (req, res) => {
-    const {clientName, amount, creditTerm} = req.body;
-    const newCredit = {
-        id: ++creditID,
-        client_name: clientName,
-        amount: amount,
-        credit_term: creditTerm
-    }
-
-    if (clientName && amount && creditTerm) {
-        credits.push(newCredit)
-        res.status(200).json(newCredit)
+app.post('/addnewadvert', (req, res) => {
+    const {token, pattern} = req.body;
+    const authorized = tokens.find((t) => t.token === token);
+    console.log(authorized)
+    if(authorized) {
+        const newAdvert = {
+            id: ++advertID,
+            ...pattern,
+            participants: []
+        }
+        console.log(newAdvert)
+        if(pattern.date && pattern.type && pattern.category){
+            adverts.push(newAdvert)
+            console.log(adverts)
+            res.status(200).json(adverts);        
+        } else {
+            res.status(500).send()
+        }
     } else {
-        res.status(500).send('wrong credit data')
+        res.status(401).send()
     }
-});
-
+})
 
 app.listen(3002, () => {
     console.log('events server is loaded')

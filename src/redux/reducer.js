@@ -8,6 +8,7 @@ const initialState = {
         password: '',
         hash: '',
     },
+    admin: false,
     myId: 0,
     token: '',
     currentDate: {

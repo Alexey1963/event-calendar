@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+.new-advert {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+.new-advert .form .main {
+    margin-top: 30px;
+}
+.new-advert .form {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: white;
+    border-radius: 10px;
+    width: 400px;
+    line-height: 20px;
+    font-family: Roboto;
+    font-weight: normal;
+    font-size: 20px;
+}
+.new-advert .form .main .label {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px;
+}
+.new-advert .form .main .label p {
+    padding: 0 10px;
+}
+.new-advert .form .main .label .input {
+   width: 200px;
+   font-size: 22x;
+   border: none;
+   outline: 1px solid black;
+   /* color: #9F9F9F;
+   line-height: 22px;     */
+}
+.new-advert .form .main .label .textarea {
+    resize: horizontal;
+    width: 200px;
+    height: 100px;
+    font-style: italic;
+    line-height: 20px;
+    font-size: 20x;
+ } 
+.new-advert .select-list {
+    width: 100%;
+    height: 40px;
+    padding: 5px 20px;
+    font-size: 20px;
+    line-height: 24px;
+    background-color: white;
+    border: none;
+    outline: none;
+    color: #9F9F9F;    
+    color: black;
+    border-radius: 5px;
+    cursor: pointer;
+    /* background: url('/src/Images/app-1646219_640.png') no-repeat right center /contain; */
+}
+.new-advert .footer {
+    display: flex;
+    justify-content: center;
+}
+.new-advert .footer button {
+    margin: 20px;
+    padding: 15px 30px;
+    background-color: darkgray;
+    border: none;
+    border-radius: 30px;
+    font-family: Roboto;
+    font-weight: normal;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+}

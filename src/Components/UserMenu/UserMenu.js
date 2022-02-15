@@ -1,17 +1,20 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Route, Link, Routes } from 'react-router-dom';
-import './UserMenue.css';
-import Registration from './token/token';
+import './UserMenu.css';
+import RegistrationPage from './token/token';
 import { addUserTokenToStore } from '../../redux/actions';
 import { addCategoryIndexToStore } from '../../redux/actions';
 import { connect } from 'react-redux';
 
-class UserMenue extends React.Component {
+class UserMenu extends React.Component {
     
     optionList = ['Дошкольники 3+', 'Школьники 6-15', 'Взрослые 16+'];
     
-    state = {joker: false};
+    state = {
+        joker: false,
+        admin: false
+    };
 
     setJoker = (id) => {
         // let {joker} = this.state
@@ -36,7 +39,7 @@ class UserMenue extends React.Component {
             <div className='user-menue-page'>
                 <div className='button'>
                     <div className='link' onClick={() => this.setJoker(0)}>Зарегистрироваться</div>
-                    {joker && <Registration  callBack={this.setJoker} />}
+                    {joker && <RegistrationPage  callBack={this.setJoker} />}
                 </div>
                 <div className='select-category'>
                     <select className='select-list' onChange={(e) => this.getAdvertsCategory(e)}>
@@ -56,7 +59,6 @@ class UserMenue extends React.Component {
     }
 }
 
-// export default UserMenue;
 function mapDispatchToProps(dispatch) {
     return {
         addUserToken: (token) => dispatch(addUserTokenToStore(token)),
@@ -65,5 +67,5 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect( null, mapDispatchToProps)(UserMenue);
+export default connect( null, mapDispatchToProps)(UserMenu);
 

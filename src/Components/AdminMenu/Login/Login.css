@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
-.list {
+.login {
     width: 100vw;
     height: 100vh;
     background-color: rgba(0,0,0,0.5);
@@ -11,46 +11,37 @@
     align-items: center;
     z-index: 2;
 }
-.list ul {
+.login .form {
     margin-left: 20px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     background-color: white;
-    width: 800px;
+    width: 400px;
     line-height: 20px;
     font-family: Roboto;
     font-weight: normal;
     font-size: 20px;
 }
-.list ul .item {
-    width: 100%;
-    height: 22px;
+.login .form .label {
+    width: 90%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    padding: 10px 10px;
 }
-.list ul .item .data {
+.login .form .label p {
     padding: 0 10px;
 }
-.list ul .item .button {
-    margin: 0 10px;
-    padding: 5px 10px;
-    background-color: darkgray;
-    border: none;
-    border-radius: 10px;
-    font-family: Roboto;
-    font-weight: normal;
-    font-size: 20px;
-    color: white;
-    cursor: pointer;
+.login .form .label .input {
+   width: 200px;
+   font-size: 22x;
 }
-.list .footer {
+.login .footer {
     display: flex;
     justify-content: center;
 }
-.list .footer button {
+.login .footer button {
     margin: 20px;
     padding: 15px 30px;
     background-color: darkgray;
