@@ -38,6 +38,7 @@ class Login extends React.Component {
                         <p>Пароль</p>
                         <input name='login'
                             className='input'
+                            type='password'
                             value={login} 
                             onChange={e => this.changeInput(e,'login')} 
                         />

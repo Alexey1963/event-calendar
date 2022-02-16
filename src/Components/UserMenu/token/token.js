@@ -47,26 +47,27 @@ class Registration extends React.Component {
             email: fd.get("email")
         }
         // console.log(user.phone.length)
-        
-        fetch('http://localhost:3002/registration', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(user)
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            this.props.addUserToken(data.newToken)
-            this.props.callBack(1)
-            if(data.user.name === 'admin') {
-                // console.log(history)
-                history('/admin')
-            }
-        })
-        .catch(err => console.error(err))
+        if(user.name && user.phone && user.email) {
+
+            fetch('http://localhost:3002/registration', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(user)
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                this.props.addUserToken(data.newToken)
+                if(data.user.name === 'admin') {
+                    history('/admin')
+                }
+            })
+            .catch(err => console.error(err))
+        } 
+        this.props.callBack(1)
     }
 
     render() {

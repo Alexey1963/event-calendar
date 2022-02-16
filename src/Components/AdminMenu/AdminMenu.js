@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Route, Link, Routes } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './AdminMenu.css';
 import LoginPage from './Login/Login';
 import NewAdvert from './NewAdvert/NewAdvert';
@@ -19,9 +20,15 @@ class AdminMenu extends React.Component {
 
     setJoker = (id, item) => {
         // let {joker} = this.state
+        const {history} = this.props
+
         let res
         id ? res = false : res = true
         this.setState({[item]: res})
+        if (item === 'joker' && id === 1) {
+            this.props.addUserToken('')
+            history('/')
+        }
     }
     
     render() {
@@ -42,12 +49,17 @@ class AdminMenu extends React.Component {
 }
 
 // export default UserMenue;
+
 function mapDispatchToProps(dispatch) {
     return {
         addUserToken: (token) => dispatch(addUserTokenToStore(token)),
-        addCategoryIndex: (index) => dispatch(addCategoryIndexToStore(index))
-
+        addCategoryIndex: (index) => dispatch(addCategoryIndexToStore(index)),
     }
 }
 
-export default connect( null, mapDispatchToProps)(AdminMenu);
+function AdminMenuPage(props) {
+    const history = useNavigate()
+    return <AdminMenu {...props} history={history} />
+}
+
+export default connect( null, mapDispatchToProps)(AdminMenuPage);

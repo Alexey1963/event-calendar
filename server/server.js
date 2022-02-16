@@ -32,7 +32,8 @@ let users = [
         age: '',
         phone: '+ 7 123 456-78-90',
         email: 'eshum@gmail.com',
-        hash: '$2b$15$lK4mczSLBw3/9h3RQ3ZN2uOYjObu4tXtdoSOy3m8F1iXan6Tu1Doy'
+        hash: '$2b$15$lK4mczSLBw3/9h3RQ3ZN2uOYjObu4tXtdoSOy3m8F1iXan6Tu1Doy',
+        adverts: []
     }
 ]
 

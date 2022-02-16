@@ -19,12 +19,14 @@ class Adverts extends React.Component {
     subscribeUser = (id) => {
         const {token} = this.props
         const {joker} = this.state
+
         this.setState({activeID: id})
-        // console.log(id)
+
         const subscribeReq = {
             advertId: id,
             token: token
         }
+        
         if (!token) {
             this.setState({joker: true})
             setTimeout(() => this.setState({joker: false}), 2000);
@@ -59,15 +61,8 @@ class Adverts extends React.Component {
 
     componentDidUpdate() {
         
-        // fetch('http://localhost:3002/')
-        // .then(res => res.json())
-        // .then(data => {
-        //     // console.log(data)
-        //     this.props.addAdvertsList(data)
-        // })
-        // .catch(err => console.error(err))
-
     }
+
 
     render() {
         const {advertsArr, types, categories} = this.props;
@@ -81,6 +76,7 @@ class Adverts extends React.Component {
                         <AdvertItem {...item}
                                     type={types[item.type]}
                                     category={categories[item.category]}
+                                    imageIndex={item.category}
                                     joker={joker}
                                     activeID={activeID}
                                     callBack={this.subscribeUser} />

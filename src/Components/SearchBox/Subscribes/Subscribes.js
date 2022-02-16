@@ -28,7 +28,6 @@ class Subscribes extends React.Component {
             .then(res => res.json())
             .then(data => {
                 console.log(data)
-                // this.setState({advertsList: data}, console.log(this.state.advertsList))
                 this.getUserSubscribes()
             })
             .catch(err => console.error(err))
@@ -68,10 +67,6 @@ class Subscribes extends React.Component {
     componentDidMount() {
         this.getUserSubscribes()
     }
-    // componentDidUpdate() {
-    //     this.getUserSubscribes()
-    // }
-
 
     render() {
         const {advertsList} = this.state

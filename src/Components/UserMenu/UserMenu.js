@@ -9,18 +9,14 @@ import { connect } from 'react-redux';
 
 class UserMenu extends React.Component {
     
-    optionList = ['Дошкольники 3+', 'Школьники 6-15', 'Взрослые 16+'];
-    
     state = {
-        joker: false,
-        admin: false
+        toggle: false,
     };
 
     setJoker = (id) => {
-        // let {joker} = this.state
         let res
         id ? res = false : res = true
-        this.setState({joker: res})
+        this.setState({toggle: res})
     }
     
     getAdvertsCategory = (e) => {
@@ -33,29 +29,33 @@ class UserMenu extends React.Component {
     }
 
     render() {
-        let {joker} = this.state
+        let {toggle} = this.state
+        const {categories} = this.props
 
         return (
             <div className='user-menue-page'>
                 <div className='button'>
                     <div className='link' onClick={() => this.setJoker(0)}>Зарегистрироваться</div>
-                    {joker && <RegistrationPage  callBack={this.setJoker} />}
+                    {toggle && <RegistrationPage  callBack={this.setJoker} />}
                 </div>
                 <div className='select-category'>
                     <select className='select-list' onChange={(e) => this.getAdvertsCategory(e)}>
                         <option>Выбрать возрастную группу</option>
-                        {this.optionList.map((x, index) => {
+                        {categories.map((x, index) => {
                             return (
                                 <option key={index} value={index}>{`${x}`}</option>
                             )
                         })}
                     </select>
                 </div>
-                {/* <Routes className="routes">
-                    <Route path="/token" element={<RegistrationPage />} />
-                </Routes>                 */}
             </div>
         )
+    }
+}
+
+function mapStateToProps(state) {
+    return {
+        categories: state.categories
     }
 }
 
@@ -67,5 +67,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect( null, mapDispatchToProps)(UserMenu);
-
+export default connect( mapStateToProps, mapDispatchToProps)(UserMenu);

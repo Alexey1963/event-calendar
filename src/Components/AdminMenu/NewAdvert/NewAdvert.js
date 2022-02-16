@@ -36,13 +36,13 @@ class NewAdvert extends React.Component {
         e.preventDefault()
         const {token} = this.props;
         const fd = new FormData(e.target);
+        
         const pattern = {
             date: fd.get("date"),
             type: fd.get("type"),
             category: fd.get("category"),
             description: fd.get("description")
         }
-        console.log(pattern);
 
         const sentData = {
             token: token,
