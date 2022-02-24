@@ -1,5 +1,92 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
-.search-box {
+@import url('https://fonts.googleapis.com/css2?family=Montagu+Slab&family=Montserrat&family=Roboto+Slab&display=swap');
+.main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: Montagu+Slab;
+    /* justify-content: center;
+    align-items: center; */
+}
+.main .new-search {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0 20px 0;
+    font-family: Roboto;
+}
+.main .new-search .selector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main .new-search .selector .item {
+    width: calc(11em + 0.2vw);
+    height: 44px;
+    border-radius: 22px;
+    margin-right: 16px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: calc(0.8em + 0.2vw);   
+    /* font-size: 14px; */
+    cursor: pointer;
+}
+.main .new-search .selector .item .text {
+    line-height: 1em;
+    padding: 10px 0 10px 10px;
+}
+.main .new-search .selector .item .button {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    border: 1px solid white;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    margin: 10px 10px 10px 5px;
+}
+.main .new-search .navigate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 2em;
+}
+.main .new-search .navigate .up {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: url('/src/Images/up arrow norm.png') no-repeat center center /cover rgba(255, 255, 255, 1);
+    margin: 0 10px;
+    border: 2px solid orange;
+    cursor: pointer;
+}
+.main .new-search .navigate .up:hover {
+    background-color: rgba(252, 209, 0, 1);
+}
+.main .new-search .navigate .current-month {
+    /* height: 44px; */
+    width: 150px;
+    line-height: 1em;
+    font-size: calc(0.8em + 0.2vw);   
+    padding: 15px 20px 15px 20px;
+    text-align: center;
+    border: 1px solid #652483;
+    border-radius: 23px;
+}
+.main .new-search .navigate .down {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: url('/src/Images/down arrow norm.png') no-repeat center center /cover rgba(255, 255, 255, 1);
+    margin: 0 10px;
+    border: 2px solid orange;
+    cursor: pointer;
+}
+.main .new-search .navigate .down:hover {
+    background-color: rgba(252, 209, 0, 1);
+}
+.main .search-box {
     width: 100%;
     display: flex;
     flex-direction: row-reverse;
@@ -11,7 +98,7 @@
     font-weight: normal;
     font-size: 20px;
 }
-.search-box .show-all {
+.main .search-box .show-all {
     height: 30px;
     display: flex;
     justify-content: center;
@@ -27,14 +114,14 @@
     font-size: calc(0.5em + 1vw);
     text-align: center;   
 }
-.search-box .search {
+.main .search-box .search {
     width: 60%;
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
 }
-.search-box .forward {
+.main .search-box .forward {
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -43,7 +130,7 @@
     border: 2px solid orangered;
     cursor: pointer;
 }
-.search-box .actual-period {
+.main .search-box .actual-period {
     width: 300px;
     background-color: #642b87;
     color: white;
@@ -53,7 +140,7 @@
     text-align: center; 
     font-size: calc(0.5em + 1vw);   
 }
-.search-box .back {
+.main .search-box .back {
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -62,7 +149,7 @@
     border: 2px solid orangered;
     cursor: pointer;
 }
-.search-box .subscribes {
+.main .search-box .subscribes {
     height: 30px;
     display: flex;
     justify-content: center;

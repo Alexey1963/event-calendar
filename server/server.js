@@ -171,6 +171,34 @@ app.post('/addnewadvert', (req, res) => {
     }
 })
 
+app.post('/advertuserslist', (req, res) => {
+    const {token, advertID} = req.body;
+    const authorized = tokens.find((t) => t.token === token);
+    // console.log(authorized)
+    if(authorized) {
+        const index = adverts.findIndex(u => u.id === advertID);
+        let advert = adverts[index];
+        let participantsList = advert.participants;
+        const usersList = users.filter(a => participantsList.includes(a.id))
+        let list = usersList.map(u => (
+            {
+                name: u.name,
+                age: u.age,
+                phone: u.phone,
+                email: u.email
+            }
+            ))
+        console.log(list)
+        const answer = {
+            id: advertID,
+            users: list
+        }
+        res.json(answer);        
+    } else {
+        res.status(401).send()
+    }
+})
+
 app.listen(3002, () => {
     console.log('events server is loaded')
 })

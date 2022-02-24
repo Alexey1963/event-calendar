@@ -1,6 +1,9 @@
 import React from 'react';
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
+import { setAdminStatusInStore } from '../../../redux/actions';
+import { connect } from 'react-redux';
+
 const password = '123';
 
 class Login extends React.Component {
@@ -20,10 +23,9 @@ class Login extends React.Component {
 
         const fd = new FormData(e.target);
         const login = fd.get("login");
-        // console.log(login, password)
+        this.props.setAdminStatus(true)
         this.props.callBack(0,'joker')
         if(login !== password) {
-            // console.log(history)
             history('/')
         }
     }
@@ -52,10 +54,16 @@ class Login extends React.Component {
     }
 }
 
+function mapDispatchToProps(dispatch) {
+    return {
+        setAdminStatus: (value) => dispatch(setAdminStatusInStore(value)),
+    }
+}
+
 function LoginPage(props) {
     const history = useNavigate()
     return <Login {...props} history={history} />
 }
 
-export default LoginPage;
+export default connect( null, mapDispatchToProps)(LoginPage);
 

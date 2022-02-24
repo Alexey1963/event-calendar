@@ -60,18 +60,29 @@ class Adverts extends React.Component {
     }
 
     componentDidUpdate() {
-        
+
     }
 
 
     render() {
-        const {advertsArr, types, categories} = this.props;
+        const {advertsArr, filter, types, categories, admin} = this.props;
         const {joker, activeID} = this.state
+        let adverts
+        if (filter.date === -1 || admin) {
+            adverts = advertsArr
+        } else {
+            adverts = advertsArr.filter(a =>
+                filter.category.includes(+a.category) &&
+                (+a.date.split('-').filter((x,i) => i === 1)[0] - 1) === filter.month &&
+                +a.date.split('-').filter((x,i) => i === 2)[0] >= filter.date
+            )
+        }
+        console.log (adverts)
         // console.log(advertsArr)
         return (
             <div className='adverts-list'>
                 <ul className='ul'>
-                    {advertsArr.map((item) => (
+                    {adverts.map((item) => (
                     <li className='item' key={item.id}>
                         <AdvertItem {...item}
                                     type={types[item.type]}
@@ -93,8 +104,10 @@ const mapStateToProps = (state) => {
     return {
         token: state.token,
         advertsArr: state.adverts,
+        filter: state.advertsFilter,
         types: state.types,
-        categories: state.categories
+        categories: state.categories,
+        admin: state.admin
     }
 }
 

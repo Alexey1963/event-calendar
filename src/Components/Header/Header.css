@@ -1,24 +1,74 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montagu+Slab&family=Montserrat&display=swap');
+
 .header-page {
-    width: 100%;
+    width: 100vw;
+    /* width: 100%; */
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    position: relative;
+    font-family: Montagu+Slab;
 }
-.header-page p {
-    font-family: Roboto;
-    font-size: 40px;
-    line-height: 45px;
-    font-weight: 700;
-    font-style: bold;
+.header-page .link {
+    position: absolute;
+    top: 55px;
+    left: 85%;
+    width: 100px;
+    height: 50px;
+    border: 1px solid white;
+    border-radius: 26px;
+    line-height: 50px;
+    font-size: calc(0.8em + 1vw);   
+    /* font-size: 24px; */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
 }
 .header-page .image{
     width: 100%;
-    margin: 10px 10px;
-    height: 400px;
-    /* min-height: 400px; */
+    /* margin: 10px 10px; */
+    height: 296px;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background: url('/src/Images/image1.svg') no-repeat center center /contain rgba(128, 128, 128, 1); */
+    background: url('/src/Images/img.svg') no-repeat center center /cover rgba(128, 128, 128, 1);
+}
+.header-page .image .text {
+    font-family: Montagu+Slab;
+    /* font-size: 48px; */
+    font-size: calc(2em + 1.4vw);   
+    line-height: 72px;
+    font-weight: 400;
+    font-style: normal;
+    color: black;
+    background-color: white;
+    width: 50%;
+    height: 50%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* text-stroke: 1px black; */
+}
+.header-page .current-date {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 75%;
+    left: 50%;
+    width: 25%;
+    background-color: #652483;
+    color: white;
+    padding: 15px 30px;
+    border: 1px solid white; 
+    border-radius: 30px;
+    text-align: center; 
+    font-size: calc(0.8em + 1vw);   
 }
 .header-page img {
     width: 100%;

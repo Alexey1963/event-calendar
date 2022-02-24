@@ -1,5 +1,6 @@
 import { WRITE_CURRENT_DATE_TO_STORE, ADD_USER_TO_ADVERTITEM_IN_STORE, ADD_USER_TOKEN_TO_STORE,
-        ADD_CATEGORY_INDEX_TO_STORE, ADD_ADVERTS_LIST_TO_STORE } from "./actions";
+        ADD_CATEGORY_INDEX_TO_STORE, ADD_ADVERTS_LIST_TO_STORE, WRITE_SEARCH_DATE_TO_STORE,
+        SET_ADMIN_STATUS_IN_STORE } from "./actions";
 
 const initialState = {
     user: {
@@ -12,25 +13,28 @@ const initialState = {
     myId: 0,
     token: '',
     currentDate: {
+        day: '',
         date: '',
         month: '',
         year: ''
     },
-    advertsRequest: {
+    advertsFilter: {
         date: '',
         month: '',
         year: '',
-        category: ''
+        category: []
     },
     adverts: [],
-        types: ['ФанЛаб1', 'ФанЛаб2', 'ФанЛаб3', 'ФанЛаб4'],
-    categories: ['Дошкольники 3+', 'Школьники 6-16', 'Взрослые 16+'],
+    months: ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'],
+    days: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
+    types: ['ФанЛаб1', 'ФанЛаб2', 'ФанЛаб3', 'ФанЛаб4'],
+    categories: ['для малышей 3+', 'для детей 7+', 'для детей 12+', 'для взрослых'],
     userAdvertsStack: []
 }
 
 function reducer(state=initialState, action) {
 
-    const { user, myId, adverts, advertsRequest } = state;
+    const { user, admin, adverts, advertsFilter } = state;
     
     switch(action.type) {
 
@@ -63,10 +67,11 @@ function reducer(state=initialState, action) {
                 return state;
             
             case ADD_CATEGORY_INDEX_TO_STORE:
-                const { ind } = action.payload;
-                const req = {...advertsRequest}
-                req.category = ind;
-                state = {...state, advertsRequest: req}
+                const { arr } = action.payload;
+                // const arr = advertsFilter.category.push(+ind)
+                const req = {...advertsFilter, category: arr}
+                // req.category = +ind;
+                state = {...state, advertsFilter: req}
                 console.log(state)
                 return state; 
 
@@ -74,7 +79,24 @@ function reducer(state=initialState, action) {
                 const { list } = action.payload;
                 state = {...state, adverts: list}
                 // console.log(state)
-                return state;    
+                return state;
+            
+            case WRITE_SEARCH_DATE_TO_STORE:
+                const {searchDate} = action.payload;
+                const newFilter = {...advertsFilter,
+                    date: searchDate.date,
+                    month: searchDate.month,
+                    year: searchDate.year
+                }
+                state = {...state, advertsFilter: newFilter}
+                console.log(state)
+                return state;
+                
+            case SET_ADMIN_STATUS_IN_STORE:
+                const {value} = action.payload;
+                state = {...state, admin: value}
+                console.log(state)
+                return state;
         
         default:
               

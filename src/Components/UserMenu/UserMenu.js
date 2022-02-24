@@ -23,9 +23,9 @@ class UserMenu extends React.Component {
         e.preventDefault()
         const index = e.currentTarget.value;
         console.log(index)
-        if (index !== NaN) {
-            this.props.addCategoryIndex(index)
-        }
+        // if (index !== NaN) {
+        //     this.props.addCategoryIndex(index)
+        // }
     }
 
     render() {
@@ -39,14 +39,14 @@ class UserMenu extends React.Component {
                     {toggle && <RegistrationPage  callBack={this.setJoker} />}
                 </div>
                 <div className='select-category'>
-                    <select className='select-list' onChange={(e) => this.getAdvertsCategory(e)}>
+                    {/* <select className='select-list' onChange={(e) => this.getAdvertsCategory(e)}>
                         <option>Выбрать возрастную группу</option>
                         {categories.map((x, index) => {
                             return (
                                 <option key={index} value={index}>{`${x}`}</option>
                             )
                         })}
-                    </select>
+                    </select> */}
                 </div>
             </div>
         )

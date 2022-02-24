@@ -28,8 +28,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background: url('/src/Images/advert2.png') no-repeat center center /contain rgba(128, 128, 128, 1);
-    background-size: auto auto; */
+    /* background: url('/src/Images/advert2.png') no-repeat center center /contain rgba(128, 128, 128, 1); */
+    /* background-size: auto auto; */
 }
 .advert-item .image-block .div {
     overflow: hidden;
