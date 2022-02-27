@@ -5,18 +5,26 @@ import { useNavigate } from 'react-router-dom';
 import './AdminMenu.css';
 import LoginPage from './Login/Login';
 import NewAdvert from './NewAdvert/NewAdvert';
+import NewImage from './NewImage/NewImage';
 import UsersList from './UsersList/UsersList';
 import { addUserTokenToStore } from '../../redux/actions';
 import { addCategoryIndexToStore } from '../../redux/actions';
 import { setAdminStatusInStore } from '../../redux/actions';
 import { connect } from 'react-redux';
 
+const HOST = 'http://localhost:3002'
+
 class AdminMenu extends React.Component {
     
     state = {
         joker: false,
         toggle: false,
-        toggle1: false
+        toggle1: false,
+        images: [
+            {
+                url: null
+            }
+        ]
     };
 
     exit = () => {
@@ -28,10 +36,10 @@ class AdminMenu extends React.Component {
 
     setJoker = (id, item) => {
         // let {joker} = this.state
-
+        console.log(id, item)
         let res
         id ? res = false : res = true
-        this.setState({[item]: res})
+        this.setState({[item]: res}, () => console.log(this.state.toggle))
     }
     
     render() {
@@ -44,7 +52,8 @@ class AdminMenu extends React.Component {
                     {!joker && <LoginPage  callBack={this.setJoker} />}
                 </div>
                 <div className='button' onClick={() => this.setJoker(0,'toggle')}>Новое объявление</div>
-                    {toggle && <NewAdvert callBack={this.setJoker} />}
+                    {/* {toggle && <NewAdvert callBack={this.setJoker} />} */}
+                    {toggle && <NewImage callBack={this.setJoker} />}
                 <div className='button' onClick={() => this.setJoker(0,'toggle1')}>Смотреть подписки</div>
                 {toggle1 && <UsersList callBack={this.setJoker} />}
             </div>

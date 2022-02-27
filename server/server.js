@@ -1,11 +1,21 @@
 const express = require('express');
-const app = express();
+const multer = require('multer');
+const fs = require('fs');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 
-app.use(express.json()); 
-app.use(express.urlencoded({ extended: true }));
+const IMAGES_FOLDER = `${__dirname}/images`;
+const DATA_FOLDER = `${__dirname}/data`;
+
+const app = express();
 app.use(cors())
+app.use(express.static(__dirname));
+
+express.json();
+express.urlencoded({extended: true});
+
+// app.use(express.json()); 
+// app.use(express.urlencoded({ extended: true }));
 
 app.all((req, res, next) => {
     res.set('Access-Control-Allow-Origin', 'http://localhost:3000')
@@ -13,12 +23,13 @@ app.all((req, res, next) => {
     next()
 })
 
+
 function getRandomString() {
     let resString = '';
     const letters = ['a', 'b', 'c', 'd', 'e', 'f', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     const length = Math.floor(10 + Math.random() * 1000);
     for (let i = 0; i < length; i++){
-      resString += letters[Math.floor(Math.random() * (letters.length - 1))];
+        resString += letters[Math.floor(Math.random() * (letters.length - 1))];
     }
     return resString;
 }
@@ -37,19 +48,37 @@ let users = [
     }
 ]
 
-let adverts = [
-    // {
-    //     id: 1,
-    //     type: 0,
-    //     category: 0,
-    //     date: '2022-02-23',
-    //     descr: 'bla-bla-bla',
-    //     participants: []
-    // }
-]
+let adverts = []
 
 let userID = 0;
 let advertID = 0;
+
+const galleryStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, `${IMAGES_FOLDER}`);
+    },
+    filename: (req, file, cb) => {
+        const { id } = req.params;
+        console.log (id)
+        // const json = fs.readFileSync(`${DATA_FOLDER}/gallery.json`);
+        // const data = JSON.parse(json);
+        // data[id] = file.originalname;
+        // fs.writeFileSync(`${DATA_FOLDER}/gallery.json`, JSON.stringify(data));
+        cb(null, file.originalname);
+    }
+});
+
+const galleryUpload = multer({ destination: "images" });
+// const galleryUpload = multer({ storage: galleryStorage });
+// app.use(multer({ storage: galleryStorage }).single('file'));
+
+
+app.post('/gallery/:id', galleryUpload.single('upload-file'), (req, res) => {
+    // const {file} = req.body
+    const data = req.file
+    console.log(req.file)
+    res.send('Файл загружен')
+})
 
 app.post('/registration', (req, res) => {
     const {name, age, phone, email} = req.body;
@@ -117,7 +146,7 @@ app.post('/subscribesuserlist', (req, res) => {
         let user = users[index];
         let list = user.adverts;
         const advertsList = adverts.filter(a => list.includes(a.id))
-        console.log(advertsList)
+        // console.log(advertsList)
         res.json(advertsList);        
     } else {
         res.status(401).send()
@@ -151,7 +180,7 @@ app.delete('/subscribe-remove/:id', (req, res) => {
 app.post('/addnewadvert', (req, res) => {
     const {token, pattern} = req.body;
     const authorized = tokens.find((t) => t.token === token);
-    console.log(authorized)
+    // console.log(authorized)
     if(authorized) {
         const newAdvert = {
             id: ++advertID,
@@ -188,7 +217,7 @@ app.post('/advertuserslist', (req, res) => {
                 email: u.email
             }
             ))
-        console.log(list)
+        // console.log(list)
         const answer = {
             id: advertID,
             users: list

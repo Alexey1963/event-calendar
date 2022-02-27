@@ -1,7 +1,6 @@
 import React from 'react';
 import './NewAdvert.css';
-// import { useNavigate } from 'react-router-dom';
-// import { addUserTokenToStore } from '../../../redux/actions'
+import obj from '../../../../config.json';
 import { addAdvertsListToStore } from '../../../redux/actions';
 import { connect } from 'react-redux';
 
@@ -25,10 +24,6 @@ class NewAdvert extends React.Component {
   
     changeInput = (e, item) => {
         let itemValue = e.currentTarget.value
-        // if (item === 'phone') {
-        //     itemValue = this.formattingNumbers(itemValue)
-        // }
-        // console.log(itemValue)
         this.setState({[item]: itemValue})
     }
 
@@ -41,15 +36,16 @@ class NewAdvert extends React.Component {
             date: fd.get("date"),
             type: fd.get("type"),
             category: fd.get("category"),
-            description: fd.get("description")
+            description: fd.get("description"),
+            // file: fd.get("file")
         }
-
+        console.log (fd)
         const sentData = {
             token: token,
             pattern: pattern
         }
         
-        fetch('http://localhost:3002/addnewadvert', {
+        fetch(`${obj.HOST}/addnewadvert`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
