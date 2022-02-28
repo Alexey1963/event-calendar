@@ -14,6 +14,19 @@ class AdvertItem extends React.Component {
         this.props.callBack(id)
     }
 
+    componentDidMount() {
+        fetch('http://localhost:3002/gallery')
+        .then(res => {
+            console.log(res)
+            return
+            res.json()
+        }) 
+        .then(data => {
+            console.log(data)
+            // this.props.addAdvertsList(data)
+        })
+        .catch(err => console.error(err))
+    }
 
     render() {
         const {id, type, category, date, descr, imageIndex, joker, activeID} = this.props
@@ -25,7 +38,8 @@ class AdvertItem extends React.Component {
                 <div className='data'>{`${type}`}</div>
                 <div className='image-block' >
                     <div className='div'>
-                        <img className='image' src={images[imageIndex]} />
+                        {/* <img className='image' src={images[imageIndex]} /> */}
+                        <img className='image' src={'http://localhost:3002/gallery/advert1.png'} />
                     </div>
                     <div className='image'></div>
                     {joker && (id === activeID) && <div className='claim'>Необходимо зарегистрироваться</div>}

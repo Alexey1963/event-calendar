@@ -3,19 +3,20 @@ const multer = require('multer');
 const fs = require('fs');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+const mkdirp = require('mkdirp');
 
-const IMAGES_FOLDER = `${__dirname}/images`;
+const IMAGES_FOLDER = `${__dirname}/gallery`;
 const DATA_FOLDER = `${__dirname}/data`;
 
 const app = express();
 app.use(cors())
 app.use(express.static(__dirname));
 
-express.json();
-express.urlencoded({extended: true});
+// express.json();
+// express.urlencoded({extended: true});
 
-// app.use(express.json()); 
-// app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true }));
 
 app.all((req, res, next) => {
     res.set('Access-Control-Allow-Origin', 'http://localhost:3000')
@@ -53,31 +54,43 @@ let adverts = []
 let userID = 0;
 let advertID = 0;
 
-const galleryStorage = multer.diskStorage({
+const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, `${IMAGES_FOLDER}`);
     },
     filename: (req, file, cb) => {
         const { id } = req.params;
-        console.log (id)
-        // const json = fs.readFileSync(`${DATA_FOLDER}/gallery.json`);
-        // const data = JSON.parse(json);
-        // data[id] = file.originalname;
-        // fs.writeFileSync(`${DATA_FOLDER}/gallery.json`, JSON.stringify(data));
+        console.log (id, file.originalname)
+        const json = fs.readFileSync(`${DATA_FOLDER}/gallery.json`);
+        const data = JSON.parse(json);
+        data[id] = file.originalname;
+        fs.writeFileSync(`${DATA_FOLDER}/gallery.json`, JSON.stringify(data));
         cb(null, file.originalname);
     }
 });
 
-const galleryUpload = multer({ destination: "images" });
-// const galleryUpload = multer({ storage: galleryStorage });
-// app.use(multer({ storage: galleryStorage }).single('file'));
+// const galleryUpload = multer({ destination: `${IMAGES_FOLDER}` });
+const galleryUpload = multer({ storage: storage });
 
+app.get('/gallery/:file', (req, res) => {
+    const { file } = req.params;
+    console.log(file)
+    res.sendFile(`/${file}.png`, { root: IMAGES_FOLDER })
+})
+
+app.get('/gallery', (req, res) => {
+    const json = fs.readFileSync(`${DATA_FOLDER}/gallery.json`);
+    console.log(json)
+    res.send(json);
+})
 
 app.post('/gallery/:id', galleryUpload.single('upload-file'), (req, res) => {
     // const {file} = req.body
     const data = req.file
     console.log(req.file)
-    res.send('Файл загружен')
+    // fs.writeFileSync(`${DATA_FOLDER}/gallery.json`, JSON.stringify(data));
+    res.status(200).json('Файл загружен')
+    // res.send('Файл загружен')
 })
 
 app.post('/registration', (req, res) => {

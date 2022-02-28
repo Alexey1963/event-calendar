@@ -52,8 +52,8 @@ class AdminMenu extends React.Component {
                     {!joker && <LoginPage  callBack={this.setJoker} />}
                 </div>
                 <div className='button' onClick={() => this.setJoker(0,'toggle')}>Новое объявление</div>
-                    {/* {toggle && <NewAdvert callBack={this.setJoker} />} */}
-                    {toggle && <NewImage callBack={this.setJoker} />}
+                    {toggle && <NewAdvert callBack={this.setJoker} />}
+                    {/* {toggle && <NewImage callBack={this.setJoker} />} */}
                 <div className='button' onClick={() => this.setJoker(0,'toggle1')}>Смотреть подписки</div>
                 {toggle1 && <UsersList callBack={this.setJoker} />}
             </div>

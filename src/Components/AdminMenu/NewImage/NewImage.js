@@ -28,12 +28,8 @@ class NewImage extends React.Component {
         // newImg[index] = { url: `${obj.HOST}/images/${file.name}` }
         // this.setState({images: newImg}, () => console.log(this.state.images))
 
-        fetch(`${obj.HOST}/gallery/0`, {
+        fetch(`${obj.HOST}/gallery/2`, {
             method: 'POST',
-            // headers: {
-            //     'Content-Type': 'application/json',
-            //     'Accept': 'application/json'
-            // },
             body: fd
         })
         .then(res => res.json())

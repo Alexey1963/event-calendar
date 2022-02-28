@@ -5,17 +5,24 @@ var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
     filename: "index.html",
     inject: "body"
 });
+let mode = 'development'; // По умолчанию режим development
+if (process.env.NODE_ENV === 'production') { // Режим production, если 
+  // при запуске вебпака было указано --mode=production
+  mode = 'production';
+}
 
 module.exports = {
-    mode: 'development',
+    mode,
     entry: {
         main: path.resolve(__dirname, './src/index.js')
     },
-
     output: {
         path: path.resolve(__dirname, "/build"),
         filename: 'main.bundle.js',
-    },
+        assetModuleFilename: 'assets/[hash][ext][query]', // Все ассеты будут складываться в dist/assets
+        clean: true,
+   },
+    devtool: 'source-map',
     plugins: [
         HTMLWebpackPluginConfig
     ],
@@ -40,8 +47,9 @@ module.exports = {
             },
         ],
     },
-     devServer: {
-        port: 3000
-      } 
- };
+    devServer: {
+    port: 3000,
+    hot: true, // Включает автоматическую перезагрузку страницы при изменениях
+    } 
+};
  
